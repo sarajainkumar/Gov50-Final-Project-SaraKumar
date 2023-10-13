@@ -7,7 +7,8 @@ output:
     self_contained: false
 ---
 
-
-
 ## Project thoughts
 I am interested in exploring data related to US House Representatives and the average ages of their respective constituencies. I also would like to explore the differences between the ages of State House Representatives and Federal Representatives. I would like to explore what ages are less represented in this branch of government at each level.
+
+## Milestone 2
+Does the political affiliation of the state influence the gender breakdown of state elected officials? In this study, I plan to examine gender trends in state elected officials to see if first, there are certain genders that are more represented than others on both a state-by-state level, and second, if this trend relates to the party affiliation of that region. I hypothesize that more Democratic-leaning states will have larger numbers of female officers in their individual governments. However, I expect that, overall, there will be greater male representation in officials, with trends balancing over the past few decades. As seen historically, California, a left-leaning state, has elected more women to Congress than any other state. Furthermore, Congress has been getting progressively more female in recent years. The explanatory variable of interest is what political affiliation each state is. The variable is coded = 1 for Democratic and =0 for Republican. My outcome variable is the count of female elected officials in each respective state office. For instance, if the variable is coded = 13, the data is indicating that there are 13 female representatives in that state’s government. This variable will be measured from the Center for American Women and Politics’ dataset on Women elected officials. If I observe greater numbers of female elected officials in Democratic states relative to Republicans, this would provide support for my hypothesis. If, on the other hand, I observe less female representation in left-leaning states as compared to right, this would provide evidence against my hypothesis.
