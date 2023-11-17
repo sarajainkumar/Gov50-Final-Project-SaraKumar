@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","stateofficials.csv"]}
+  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","officeholders_positions.csv","stateofficials.csv"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1520,7 +1520,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h2 id="project-thoughts">Project thoughts</h2>
 <p>I am interested in exploring data related to US House Representatives and the average ages of their respective constituencies. I also would like to explore the differences between the ages of State House Representatives and Federal Representatives. I would like to explore what ages are less represented in this branch of government at each level.</p>
 <h2 id="milestone-2">Milestone 2</h2>
-<p>Does the political affiliation of the state influence the number of female elected officials in Congress? In this study, I plan to examine gender trends in elected officials in Congress to see if first, there are greater numbers of female officials in certain states, and second, if this trend relates to the party affiliation of that region. I hypothesize that more Democratic-leaning states will have larger numbers of female senators/representatives. As seen historically, California, a left-leaning state, has elected more women to Congress than any other state. Furthermore, Congress has been getting progressively more female in recent years. The explanatory variable of interest is what political affiliation each state is. The variable is coded = 1 for Democratic and =0 for Republican. My outcome variable is the count of female elected officials in Congress for each respective state. For instance, if the variable is coded = 13, the data is indicating that there are 13 female representatives in Congress from that state. This variable will be measured from the Center for American Women and Politics’ dataset on Women elected officials. If I observe greater numbers of female elected officials in Democratic states relative to Republicans, this would provide support for my hypothesis. If, on the other hand, I observe less female representation in left-leaning states as compared to right, this would provide evidence against my hypothesis.</p>
+<p>Does political affiliation influence the race of female elected officials in Congress (specifically the House of Representatives)? In this study, I plan to examine race trends in female elected representatives in Congress to see if greater numbers of POC female representatives relate to party affiliation. I hypothesize that Democrats will demonstrate greater POC female representation in their elected representatives. As seen historically, California, a left-leaning state, has elected more African Americans to Congress than any other state. Furthermore, Congress has been getting progressively more diverse in recent years. The explanatory variable of interest is the amount of Democratic POC female representatives and the amount of Republican POC female representatives. These two explanatory variables will then be compared in external analyses. This variable will be measured from the Center for American Women and Politics’ data set on elected House of Representative officials. If I observe greater numbers of POC female elected officials in Democratic parties relative to Republicans, this would provide support for my hypothesis. If, on the other hand, I observe less POC female representation in left-leaning states as compared to right, this would provide evidence against my hypothesis.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span></code></pre>
@@ -1528,474 +1528,783 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>stateofficials</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"stateofficials.csv"</span><span class='op'>)</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>stateofficials</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"officeholders_positions.csv"</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='va'>stateofficials</span></span></code></pre>
 </div>
 <pre><code>         ID Year  First.Name Middle.Name           Last.Name
-1   196595k 2023        Alma          S.               Adams
-2   159127k 2023       Tammy                         Baldwin
-3   503276k 2023       Becca          A.              Balint
-4   197852k 2023       Joyce          B.              Beatty
-5   495403k 2023   Stephanie                            Bice
-6   198986k 2023      Marsha                       Blackburn
-7   558891k 2023        Lisa                 Blunt Rochester
-8   724132k 2023      Lauren                         Boebert
-9   249764k 2023     Suzanne          M.            Bonamici
-10  596651k 2023       Katie                           Britt
-11  772727k 2023     Shontel                           Brown
-12  248455k 2023       Julia                        Brownley
-13  693907k 2023       Nikki                      Budzinkski
-14  571342k 2023        Cori                            Bush
-15  452286k 2023    Laphonza                          Butler
-16  447426k 2023         Kat                         Cammack
-17  205537k 2023       Maria                        Cantwell
-18  200084k 2023     Shelley       Moore              Capito
-19  651512k 2023      Yadira                         Caraveo
-20  248289k 2023       Kathy          A.              Castor
-21  568297k 2023        Lori                  Chavez-DeRemer
-22  665191k 2023      Sheila             Cherfilus-McCormick
-23  209456k 2023        Judy                             Chu
-24  263010k 2023   Katherine          M.               Clark
-25  248335k 2023      Yvette          D.              Clarke
-26  165234k 2023       Susan                         Collins
-27  252293k 2023   Catherine                    Cortez Masto
-28  536254k 2023      Angela          D.               Craig
-29  725560k 2023     Jasmine     Felicia            Crockett
-30  655850k 2023     Sharice                          Davids
-31  721272k 2023      Monica                      De La Cruz
-32  569358k 2023   Madeleine                            Dean
-33  158770k 2023       Diana          L.             DeGette
-34  158778k 2023        Rosa          L.             DeLauro
-35  284676k 2023       Suzan          K.             DelBene
-36  536062k 2023     Nanette                   Diaz Barragan
-37  357079k 2023      Debbie                         Dingell
-38  264841k 2023       Tammy                       Duckworth
-39  328986k 2023        Joni                           Ernst
-40  634679k 2023    Veronica                         Escobar
-41  158731k 2023        Anna          G.               Eshoo
-42  195769k 2023    Michelle          L.           Fischbach
-43  228296k 2023         Deb                         Fischer
-44  397611k 2023     Valerie          P.             Foushee
-45  196515k 2023    Virginia          A.                Foxx
-46  193594k 2023        Lois          J.             Frankel
-47  454041k 2023      Sylvia          R.              Garcia
-48  248345k 2023     Kirsten          E.          Gillibrand
-49  799642k 2023       Marie               Gluesenkamp Perez
-50  159082k 2023         Kay          N.             Granger
-51  707878k 2023    Marjorie                          Greene
-52  644129k 2023     Harriet          M.             Hageman
-53  734559k 2023       Diana                     Harshbarger
-54  227982k 2023      Maggie                          Hassan
-55  666101k 2023      Jahana                           Hayes
-56  572935k 2023      Ashley                          Hinson
-57  248294k 2023       Mazie          K.              Hirono
-58  344439k 2023        Erin                         Houchin
-59  621721k 2023     Chrissy                        Houlahan
-60  282137k 2023         Val                           Hoyle
-61  196212k 2023       Cindy                      Hyde-Smith
-62  644085k 2023        Sara                          Jacobs
-63  499054k 2023     Pramila                         Jayapal
-64  312779k 2023      Sydney          K.       Kamlager-Dove
-65  159009k 2023       Marcy          C.              Kaptur
-66  212680k 2023       Robin          L.               Kelly
-67  702465k 2023    Jennifer          A.             Kiggans
-68  494206k 2023       Young          O.                 Kim
-69  248506k 2023         Amy                       Klobuchar
-70  284835k 2023         Ann      McLane              Kuster
-71  158726k 2023     Barbara          J.                 Lee
-72  695573k 2023      Laurel                             Lee
-73  159088k 2023      Sheila     Jackson                 Lee
-74  660014k 2023      Summer          L.                 Lee
-75  541030k 2023       Susie                             Lee
-76  453352k 2023      Teresa                 Leger Fernandez
-77  267627k 2023      Debbie                           Lesko
-78  768497k 2023       Julia                          Letlow
-79  158733k 2023         Zoe                         Lofgren
-80  240578k 2023     Cynthia          M.              Lummis
-81  716944k 2023        Anna     Paulina                Luna
-82  466143k 2023       Nancy                            Mace
-83  309650k 2023      Nicole                     Malliotakis
-84  646745k 2023       Kathy                         Manning
-85  232639k 2023       Doris          O.              Matsui
-86  658185k 2023        Lucy                          McBath
-87  721727k 2023        Lisa                         McClain
-88  241253k 2023    Jennifer          L.           McClellan
-89  195933k 2023       Betty                        McCollum
-90  199779k 2023       Cathy                McMorris Rodgers
-91  271828k 2023       Grace                            Meng
-92  249553k 2023       Carol          D.              Miller
-93  721413k 2023        Mary                          Miller
-94  267080k 2023 Mariannette                    Miller-Meeks
-95  199871k 2023        Gwen          S.               Moore
-96  192554k 2023        Lisa                       Murkowski
-97  165286k 2023       Patty                          Murray
-98  158751k 2023       Grace          F.          Napolitano
-99  624858k 2023  Alexandria                   Ocasio-Cortez
-100 583510k 2023       Ilhan                            Omar
-101 625330k 2023   Elizabeth                Pannill Fletcher
-102 158725k 2023       Nancy                          Pelosi
-103 803941k 2023        Mary                         Peltola
-104 408919k 2023    Brittany          L.           Pettersen
-105 267137k 2023     Chellie          M.             Pingree
-106 621002k 2023   Katherine                          Porter
-107 234321k 2023      Ayanna                        Pressley
-108 645441k 2023       Delia          C.             Ramirez
-109 567336k 2023     Jacklyn          S.               Rosen
-110 211983k 2023     Deborah                            Ross
-111 658161k 2023       Maria                         Salazar
-112 637004k 2023      Andrea                         Salinas
-113 211684k 2023       Linda          T.             Sanchez
-114 655204k 2023        Mary         Gay             Scanlon
-115 158836k 2023         Jan          D.          Schakowsky
-116 711580k 2023     Hillary                        Scholten
-117 632874k 2023         Kim                         Schrier
-118 283908k 2023       Terri          A.              Sewell
-119 209675k 2023      Jeanne                         Shaheen
-120 625260k 2023       Mikie                        Sherrill
-121 227495k 2023     Kyrsten                          Sinema
-122 261745k 2023      Elissa                         Slotkin
-123 332335k 2023        Tina                           Smith
-124 630216k 2023     Abigail          D.          Spanberger
-125 638877k 2023    Victoria                          Spartz
-126 205511k 2023      Debbie          A.            Stabenow
-127 461875k 2023     Melanie          A.           Stansbury
-128 694474k 2023    Michelle                           Steel
-129 247560k 2023       Elise          M.            Stefanik
-130 623571k 2023       Haley                         Stevens
-131 727678k 2023     Marilyn                      Strickland
-132 486378k 2023      Emilia      Strong               Sykes
-133 216162k 2023     Claudia                          Tenney
-134 197530k 2023        Dina          C.               Titus
-135 268236k 2023     Rashida                           Tlaib
-136 249235k 2023        Jill          N.              Tokuda
-137 267783k 2023       Norma          J.              Torres
-138 636951k 2023        Lori                          Trahan
-139 601601k 2023      Lauren          A.           Underwood
-140 661605k 2023        Beth                       Van Duyne
-141 158981k 2023       Nydia          M.           Velazquez
-142 378827k 2023         Ann          L.              Wagner
-143 309189k 2023   Elizabeth          A.              Warren
-144 226499k 2023      Debbie               Wasserman Schultz
-145 158752k 2023      Maxine                          Waters
-146 362925k 2023      Bonnie                  Watson Coleman
-147 484877k 2023    Jennifer          T.              Wexton
-148 638609k 2023       Susan       Ellis                Wild
-149 648743k 2023      Nikema                        Williams
-150 211856k 2023   Frederica          S.              Wilson
-          party    Level            Position               state
-1      Democrat Congress U.S. Representative North Carolina - NC
-2      Democrat Congress        U.S. Senator      Wisconsin - WI
-3      Democrat Congress U.S. Representative        Vermont - VT
-4      Democrat Congress U.S. Representative           Ohio - OH
-5    Republican Congress U.S. Representative       Oklahoma - OK
-6    Republican Congress        U.S. Senator      Tennessee - TN
-7      Democrat Congress U.S. Representative       Delaware - DE
-8    Republican Congress U.S. Representative       Colorado - CO
-9      Democrat Congress U.S. Representative         Oregon - OR
-10   Republican Congress        U.S. Senator        Alabama - AL
-11     Democrat Congress U.S. Representative           Ohio - OH
-12     Democrat Congress U.S. Representative     California - CA
-13     Democrat Congress U.S. Representative       Illinois - IL
-14     Democrat Congress U.S. Representative       Missouri - MO
-15     Democrat Congress        U.S. Senator     California - CA
-16   Republican Congress U.S. Representative        Florida - FL
-17     Democrat Congress        U.S. Senator     Washington - WA
-18   Republican Congress        U.S. Senator  West Virginia - WV
-19     Democrat Congress U.S. Representative       Colorado - CO
-20     Democrat Congress U.S. Representative        Florida - FL
-21   Republican Congress U.S. Representative         Oregon - OR
-22     Democrat Congress U.S. Representative        Florida - FL
-23     Democrat Congress U.S. Representative     California - CA
-24     Democrat Congress U.S. Representative  Massachusetts - MA
-25     Democrat Congress U.S. Representative       New York - NY
-26   Republican Congress        U.S. Senator          Maine - ME
-27     Democrat Congress        U.S. Senator         Nevada - NV
-28     Democrat Congress U.S. Representative      Minnesota - MN
-29     Democrat Congress U.S. Representative          Texas - TX
-30     Democrat Congress U.S. Representative         Kansas - KS
-31   Republican Congress U.S. Representative          Texas - TX
-32     Democrat Congress U.S. Representative   Pennsylvania - PA
-33     Democrat Congress U.S. Representative       Colorado - CO
-34     Democrat Congress U.S. Representative    Connecticut - CT
-35     Democrat Congress U.S. Representative     Washington - WA
-36     Democrat Congress U.S. Representative     California - CA
-37     Democrat Congress U.S. Representative       Michigan - MI
-38     Democrat Congress        U.S. Senator       Illinois - IL
-39   Republican Congress        U.S. Senator           Iowa - IA
-40     Democrat Congress U.S. Representative          Texas - TX
-41     Democrat Congress U.S. Representative     California - CA
-42   Republican Congress U.S. Representative      Minnesota - MN
-43   Republican Congress        U.S. Senator       Nebraska - NE
-44     Democrat Congress U.S. Representative North Carolina - NC
-45   Republican Congress U.S. Representative North Carolina - NC
-46     Democrat Congress U.S. Representative        Florida - FL
-47     Democrat Congress U.S. Representative          Texas - TX
-48     Democrat Congress        U.S. Senator       New York - NY
-49     Democrat Congress U.S. Representative     Washington - WA
-50   Republican Congress U.S. Representative          Texas - TX
-51   Republican Congress U.S. Representative        Georgia - GA
-52   Republican Congress U.S. Representative        Wyoming - WY
-53   Republican Congress U.S. Representative      Tennessee - TN
-54     Democrat Congress        U.S. Senator  New Hampshire - NH
-55     Democrat Congress U.S. Representative    Connecticut - CT
-56   Republican Congress U.S. Representative           Iowa - IA
-57     Democrat Congress        U.S. Senator         Hawaii - HI
-58   Republican Congress U.S. Representative        Indiana - IN
-59     Democrat Congress U.S. Representative   Pennsylvania - PA
-60     Democrat Congress U.S. Representative         Oregon - OR
-61   Republican Congress        U.S. Senator    Mississippi - MS
-62     Democrat Congress U.S. Representative     California - CA
-63     Democrat Congress U.S. Representative     Washington - WA
-64     Democrat Congress U.S. Representative     California - CA
-65     Democrat Congress U.S. Representative           Ohio - OH
-66     Democrat Congress U.S. Representative       Illinois - IL
-67   Republican Congress U.S. Representative       Virginia - VA
-68   Republican Congress U.S. Representative     California - CA
-69     Democrat Congress        U.S. Senator      Minnesota - MN
-70     Democrat Congress U.S. Representative  New Hampshire - NH
-71     Democrat Congress U.S. Representative     California - CA
-72   Republican Congress U.S. Representative        Florida - FL
-73     Democrat Congress U.S. Representative          Texas - TX
-74     Democrat Congress U.S. Representative   Pennsylvania - PA
-75     Democrat Congress U.S. Representative         Nevada - NV
-76     Democrat Congress U.S. Representative     New Mexico - NM
-77   Republican Congress U.S. Representative        Arizona - AZ
-78   Republican Congress U.S. Representative      Louisiana - LA
-79     Democrat Congress U.S. Representative     California - CA
-80   Republican Congress        U.S. Senator        Wyoming - WY
-81   Republican Congress U.S. Representative        Florida - FL
-82   Republican Congress U.S. Representative South Carolina - SC
-83   Republican Congress U.S. Representative       New York - NY
-84     Democrat Congress U.S. Representative North Carolina - NC
-85     Democrat Congress U.S. Representative     California - CA
-86     Democrat Congress U.S. Representative        Georgia - GA
-87   Republican Congress U.S. Representative       Michigan - MI
-88     Democrat Congress U.S. Representative       Virginia - VA
-89     Democrat Congress U.S. Representative      Minnesota - MN
-90   Republican Congress U.S. Representative     Washington - WA
-91     Democrat Congress U.S. Representative       New York - NY
-92   Republican Congress U.S. Representative  West Virginia - WV
-93   Republican Congress U.S. Representative       Illinois - IL
-94   Republican Congress U.S. Representative           Iowa - IA
-95     Democrat Congress U.S. Representative      Wisconsin - WI
-96   Republican Congress        U.S. Senator         Alaska - AK
-97     Democrat Congress        U.S. Senator     Washington - WA
-98     Democrat Congress U.S. Representative     California - CA
-99     Democrat Congress U.S. Representative       New York - NY
-100    Democrat Congress U.S. Representative      Minnesota - MN
-101    Democrat Congress U.S. Representative          Texas - TX
-102    Democrat Congress U.S. Representative     California - CA
-103    Democrat Congress U.S. Representative         Alaska - AK
-104    Democrat Congress U.S. Representative       Colorado - CO
-105    Democrat Congress U.S. Representative          Maine - ME
-106    Democrat Congress U.S. Representative     California - CA
-107    Democrat Congress U.S. Representative  Massachusetts - MA
-108    Democrat Congress U.S. Representative       Illinois - IL
-109    Democrat Congress        U.S. Senator         Nevada - NV
-110    Democrat Congress U.S. Representative North Carolina - NC
-111  Republican Congress U.S. Representative        Florida - FL
-112    Democrat Congress U.S. Representative         Oregon - OR
-113    Democrat Congress U.S. Representative     California - CA
-114    Democrat Congress U.S. Representative   Pennsylvania - PA
-115    Democrat Congress U.S. Representative       Illinois - IL
-116    Democrat Congress U.S. Representative       Michigan - MI
-117    Democrat Congress U.S. Representative     Washington - WA
-118    Democrat Congress U.S. Representative        Alabama - AL
-119    Democrat Congress        U.S. Senator  New Hampshire - NH
-120    Democrat Congress U.S. Representative     New Jersey - NJ
-121 Independent Congress        U.S. Senator        Arizona - AZ
-122    Democrat Congress U.S. Representative       Michigan - MI
-123    Democrat Congress        U.S. Senator      Minnesota - MN
-124    Democrat Congress U.S. Representative       Virginia - VA
-125  Republican Congress U.S. Representative        Indiana - IN
-126    Democrat Congress        U.S. Senator       Michigan - MI
-127    Democrat Congress U.S. Representative     New Mexico - NM
-128  Republican Congress U.S. Representative     California - CA
-129  Republican Congress U.S. Representative       New York - NY
-130    Democrat Congress U.S. Representative       Michigan - MI
-131    Democrat Congress U.S. Representative     Washington - WA
-132    Democrat Congress U.S. Representative           Ohio - OH
-133  Republican Congress U.S. Representative       New York - NY
-134    Democrat Congress U.S. Representative         Nevada - NV
-135    Democrat Congress U.S. Representative       Michigan - MI
-136    Democrat Congress U.S. Representative         Hawaii - HI
-137    Democrat Congress U.S. Representative     California - CA
-138    Democrat Congress U.S. Representative  Massachusetts - MA
-139    Democrat Congress U.S. Representative       Illinois - IL
-140  Republican Congress U.S. Representative          Texas - TX
-141    Democrat Congress U.S. Representative       New York - NY
-142  Republican Congress U.S. Representative       Missouri - MO
-143    Democrat Congress        U.S. Senator  Massachusetts - MA
-144    Democrat Congress U.S. Representative        Florida - FL
-145    Democrat Congress U.S. Representative     California - CA
-146    Democrat Congress U.S. Representative     New Jersey - NJ
-147    Democrat Congress U.S. Representative       Virginia - VA
-148    Democrat Congress U.S. Representative   Pennsylvania - PA
-149    Democrat Congress U.S. Representative        Georgia - GA
-150    Democrat Congress U.S. Representative        Florida - FL
+1   196595k 2022        Alma          S.               Adams
+2   627442k 2022       Cindy                            Axne
+3   197852k 2022       Joyce          B.              Beatty
+4   495403k 2022   Stephanie                            Bice
+5   558891k 2022        Lisa                 Blunt Rochester
+6   724132k 2022      Lauren                         Boebert
+7   249764k 2022     Suzanne          M.            Bonamici
+8   629889k 2022     Carolyn                       Bourdeaux
+9   772727k 2022     Shontel                           Brown
+10  248455k 2022       Julia                        Brownley
+11  571342k 2022        Cori                            Bush
+12  378493k 2022       Cheri          L.              Bustos
+13  447426k 2022         Kat                         Cammack
+14  248289k 2022       Kathy          A.              Castor
+15  464230k 2022         Liz          L.              Cheney
+16  665191k 2022      Sheila             Cherfilus-McCormick
+17  209456k 2022        Judy                             Chu
+18  263010k 2022   Katherine          M.               Clark
+19  248335k 2022      Yvette          D.              Clarke
+20  267742k 2022      Connie                          Conway
+21  536254k 2022      Angela          D.               Craig
+22  655850k 2022     Sharice                          Davids
+23  569358k 2022   Madeleine                            Dean
+24  158770k 2022       Diana          L.             DeGette
+25  158778k 2022        Rosa          L.             DeLauro
+26  284676k 2022       Suzan          K.             DelBene
+27  378538k 2022         Val          B.             Demings
+28  536062k 2022     Nanette                   Diaz Barragan
+29  357079k 2022      Debbie                         Dingell
+30  634679k 2022    Veronica                         Escobar
+31  158731k 2022        Anna          G.               Eshoo
+32  195769k 2022    Michelle          L.           Fischbach
+33  771355k 2022       Mayra                          Flores
+34  196515k 2022    Virginia          A.                Foxx
+35  193594k 2022        Lois          J.             Frankel
+36  454041k 2022      Sylvia          R.              Garcia
+37  159082k 2022         Kay          N.             Granger
+38  707878k 2022    Marjorie                          Greene
+39  734559k 2022       Diana                     Harshbarger
+40  284768k 2022       Vicky          Jo            Hartzler
+41  666101k 2022      Jahana                           Hayes
+42  299694k 2022      Yvette          S.             Herrell
+43  229353k 2022       Jaime          L.     Herrera Beutler
+44  572935k 2022      Ashley                          Hinson
+45  621721k 2022     Chrissy                        Houlahan
+46  644085k 2022        Sara                          Jacobs
+47  499054k 2022     Pramila                         Jayapal
+48  159100k 2022       Eddie     Bernice             Johnson
+49  159009k 2022       Marcy          C.              Kaptur
+50  212680k 2022       Robin          L.               Kelly
+51  494206k 2022       Young          O.                 Kim
+52  227470k 2022         Ann          L.         Kirkpatrick
+53  284835k 2022         Ann      McLane              Kuster
+54  391655k 2022      Brenda          L.            Lawrence
+55  158726k 2022     Barbara          J.                 Lee
+56  159088k 2022      Sheila     Jackson                 Lee
+57  541030k 2022       Susie                             Lee
+58  453352k 2022      Teresa                 Leger Fernandez
+59  267627k 2022      Debbie                           Lesko
+60  768497k 2022       Julia                          Letlow
+61  158733k 2022         Zoe                         Lofgren
+62  644669k 2022      Elaine          G.               Luria
+63  466143k 2022       Nancy                            Mace
+64  309650k 2022      Nicole                     Malliotakis
+65  158983k 2022     Carolyn          B.             Maloney
+66  646745k 2022       Kathy                         Manning
+67  232639k 2022       Doris          O.              Matsui
+68  658185k 2022        Lucy                          McBath
+69  721727k 2022        Lisa                         McClain
+70  195933k 2022       Betty                        McCollum
+71  199779k 2022       Cathy                McMorris Rodgers
+72  271828k 2022       Grace                            Meng
+73  249553k 2022       Carol          D.              Miller
+74  721413k 2022        Mary                          Miller
+75  267080k 2022 Mariannette                    Miller-Meeks
+76  199871k 2022        Gwen          S.               Moore
+77  588810k 2022   Stephanie                          Murphy
+78  158751k 2022       Grace          F.          Napolitano
+79  619144k 2022       Marie                          Newman
+80  624858k 2022  Alexandria                   Ocasio-Cortez
+81  583510k 2022       Ilhan                            Omar
+82  625330k 2022   Elizabeth                Pannill Fletcher
+83  158725k 2022       Nancy                          Pelosi
+84  803941k 2022        Mary                         Peltola
+85  267137k 2022     Chellie          M.             Pingree
+86  621002k 2022   Katherine                          Porter
+87  234321k 2022      Ayanna                        Pressley
+88  489426k 2022    Kathleen          M.                Rice
+89  211983k 2022     Deborah                            Ross
+90  158750k 2022     Lucille                   Roybal-Allard
+91  658161k 2022       Maria                         Salazar
+92  211684k 2022       Linda          T.             Sanchez
+93  655204k 2022        Mary         Gay             Scanlon
+94  158836k 2022         Jan          D.          Schakowsky
+95  632874k 2022         Kim                         Schrier
+96  283908k 2022       Terri          A.              Sewell
+97  625260k 2022       Mikie                        Sherrill
+98  261745k 2022      Elissa                         Slotkin
+99  630216k 2022     Abigail          D.          Spanberger
+100 638877k 2022    Victoria                          Spartz
+101 192997k 2022      Jackie                          Speier
+102 461875k 2022     Melanie          A.           Stansbury
+103 694474k 2022    Michelle                           Steel
+104 247560k 2022       Elise          M.            Stefanik
+105 623571k 2022       Haley                         Stevens
+106 727678k 2022     Marilyn                      Strickland
+107 216162k 2022     Claudia                          Tenney
+108 197530k 2022        Dina          C.               Titus
+109 268236k 2022     Rashida                           Tlaib
+110 267783k 2022       Norma          J.              Torres
+111 636951k 2022        Lori                          Trahan
+112 601601k 2022      Lauren          A.           Underwood
+113 661605k 2022        Beth                       Van Duyne
+114 158981k 2022       Nydia          M.           Velazquez
+115 378827k 2022         Ann          L.              Wagner
+116 226499k 2022      Debbie               Wasserman Schultz
+117 158752k 2022      Maxine                          Waters
+118 362925k 2022      Bonnie                  Watson Coleman
+119 484877k 2022    Jennifer          T.              Wexton
+120 638609k 2022       Susan       Ellis                Wild
+121 648743k 2022      Nikema                        Williams
+122 211856k 2022   Frederica          S.              Wilson
+         party    Level            Position               state
+1     Democrat Congress U.S. Representative North Carolina - NC
+2     Democrat Congress U.S. Representative           Iowa - IA
+3     Democrat Congress U.S. Representative           Ohio - OH
+4   Republican Congress U.S. Representative       Oklahoma - OK
+5     Democrat Congress U.S. Representative       Delaware - DE
+6   Republican Congress U.S. Representative       Colorado - CO
+7     Democrat Congress U.S. Representative         Oregon - OR
+8     Democrat Congress U.S. Representative        Georgia - GA
+9     Democrat Congress U.S. Representative           Ohio - OH
+10    Democrat Congress U.S. Representative     California - CA
+11    Democrat Congress U.S. Representative       Missouri - MO
+12    Democrat Congress U.S. Representative       Illinois - IL
+13  Republican Congress U.S. Representative        Florida - FL
+14    Democrat Congress U.S. Representative        Florida - FL
+15  Republican Congress U.S. Representative        Wyoming - WY
+16    Democrat Congress U.S. Representative        Florida - FL
+17    Democrat Congress U.S. Representative     California - CA
+18    Democrat Congress U.S. Representative  Massachusetts - MA
+19    Democrat Congress U.S. Representative       New York - NY
+20  Republican Congress U.S. Representative     California - CA
+21    Democrat Congress U.S. Representative      Minnesota - MN
+22    Democrat Congress U.S. Representative         Kansas - KS
+23    Democrat Congress U.S. Representative   Pennsylvania - PA
+24    Democrat Congress U.S. Representative       Colorado - CO
+25    Democrat Congress U.S. Representative    Connecticut - CT
+26    Democrat Congress U.S. Representative     Washington - WA
+27    Democrat Congress U.S. Representative        Florida - FL
+28    Democrat Congress U.S. Representative     California - CA
+29    Democrat Congress U.S. Representative       Michigan - MI
+30    Democrat Congress U.S. Representative          Texas - TX
+31    Democrat Congress U.S. Representative     California - CA
+32  Republican Congress U.S. Representative      Minnesota - MN
+33  Republican Congress U.S. Representative          Texas - TX
+34  Republican Congress U.S. Representative North Carolina - NC
+35    Democrat Congress U.S. Representative        Florida - FL
+36    Democrat Congress U.S. Representative          Texas - TX
+37  Republican Congress U.S. Representative          Texas - TX
+38  Republican Congress U.S. Representative        Georgia - GA
+39  Republican Congress U.S. Representative      Tennessee - TN
+40  Republican Congress U.S. Representative       Missouri - MO
+41    Democrat Congress U.S. Representative    Connecticut - CT
+42  Republican Congress U.S. Representative     New Mexico - NM
+43  Republican Congress U.S. Representative     Washington - WA
+44  Republican Congress U.S. Representative           Iowa - IA
+45    Democrat Congress U.S. Representative   Pennsylvania - PA
+46    Democrat Congress U.S. Representative     California - CA
+47    Democrat Congress U.S. Representative     Washington - WA
+48    Democrat Congress U.S. Representative          Texas - TX
+49    Democrat Congress U.S. Representative           Ohio - OH
+50    Democrat Congress U.S. Representative       Illinois - IL
+51  Republican Congress U.S. Representative     California - CA
+52    Democrat Congress U.S. Representative        Arizona - AZ
+53    Democrat Congress U.S. Representative  New Hampshire - NH
+54    Democrat Congress U.S. Representative       Michigan - MI
+55    Democrat Congress U.S. Representative     California - CA
+56    Democrat Congress U.S. Representative          Texas - TX
+57    Democrat Congress U.S. Representative         Nevada - NV
+58    Democrat Congress U.S. Representative     New Mexico - NM
+59  Republican Congress U.S. Representative        Arizona - AZ
+60  Republican Congress U.S. Representative      Louisiana - LA
+61    Democrat Congress U.S. Representative     California - CA
+62    Democrat Congress U.S. Representative       Virginia - VA
+63  Republican Congress U.S. Representative South Carolina - SC
+64  Republican Congress U.S. Representative       New York - NY
+65    Democrat Congress U.S. Representative       New York - NY
+66    Democrat Congress U.S. Representative North Carolina - NC
+67    Democrat Congress U.S. Representative     California - CA
+68    Democrat Congress U.S. Representative        Georgia - GA
+69  Republican Congress U.S. Representative       Michigan - MI
+70    Democrat Congress U.S. Representative      Minnesota - MN
+71  Republican Congress U.S. Representative     Washington - WA
+72    Democrat Congress U.S. Representative       New York - NY
+73  Republican Congress U.S. Representative  West Virginia - WV
+74  Republican Congress U.S. Representative       Illinois - IL
+75  Republican Congress U.S. Representative           Iowa - IA
+76    Democrat Congress U.S. Representative      Wisconsin - WI
+77    Democrat Congress U.S. Representative        Florida - FL
+78    Democrat Congress U.S. Representative     California - CA
+79    Democrat Congress U.S. Representative       Illinois - IL
+80    Democrat Congress U.S. Representative       New York - NY
+81    Democrat Congress U.S. Representative      Minnesota - MN
+82    Democrat Congress U.S. Representative          Texas - TX
+83    Democrat Congress U.S. Representative     California - CA
+84    Democrat Congress U.S. Representative         Alaska - AK
+85    Democrat Congress U.S. Representative          Maine - ME
+86    Democrat Congress U.S. Representative     California - CA
+87    Democrat Congress U.S. Representative  Massachusetts - MA
+88    Democrat Congress U.S. Representative       New York - NY
+89    Democrat Congress U.S. Representative North Carolina - NC
+90    Democrat Congress U.S. Representative     California - CA
+91  Republican Congress U.S. Representative        Florida - FL
+92    Democrat Congress U.S. Representative     California - CA
+93    Democrat Congress U.S. Representative   Pennsylvania - PA
+94    Democrat Congress U.S. Representative       Illinois - IL
+95    Democrat Congress U.S. Representative     Washington - WA
+96    Democrat Congress U.S. Representative        Alabama - AL
+97    Democrat Congress U.S. Representative     New Jersey - NJ
+98    Democrat Congress U.S. Representative       Michigan - MI
+99    Democrat Congress U.S. Representative       Virginia - VA
+100 Republican Congress U.S. Representative        Indiana - IN
+101   Democrat Congress U.S. Representative     California - CA
+102   Democrat Congress U.S. Representative     New Mexico - NM
+103 Republican Congress U.S. Representative     California - CA
+104 Republican Congress U.S. Representative       New York - NY
+105   Democrat Congress U.S. Representative       Michigan - MI
+106   Democrat Congress U.S. Representative     Washington - WA
+107 Republican Congress U.S. Representative       New York - NY
+108   Democrat Congress U.S. Representative         Nevada - NV
+109   Democrat Congress U.S. Representative       Michigan - MI
+110   Democrat Congress U.S. Representative     California - CA
+111   Democrat Congress U.S. Representative  Massachusetts - MA
+112   Democrat Congress U.S. Representative       Illinois - IL
+113 Republican Congress U.S. Representative          Texas - TX
+114   Democrat Congress U.S. Representative       New York - NY
+115 Republican Congress U.S. Representative       Missouri - MO
+116   Democrat Congress U.S. Representative        Florida - FL
+117   Democrat Congress U.S. Representative     California - CA
+118   Democrat Congress U.S. Representative     New Jersey - NJ
+119   Democrat Congress U.S. Representative       Virginia - VA
+120   Democrat Congress U.S. Representative   Pennsylvania - PA
+121   Democrat Congress U.S. Representative        Georgia - GA
+122   Democrat Congress U.S. Representative        Florida - FL
     District                                race_ethnicity
-1         NA                                         Black
-2         NA                                         White
-3         NA                                         White
-4         NA                                         Black
-5         NA                                         White
-6         NA                                         White
-7         NA                                         Black
-8         NA                                         White
-9         NA                                         White
-10        NA                                         White
-11        NA                                         Black
-12        NA                                         White
-13        NA                                         White
-14        NA                                         Black
-15        NA                                         Black
-16        NA                                         White
-17        NA                                         White
-18        NA                                         White
-19        NA                                        Latina
-20        NA                                         White
-21        NA                                 White, Latina
-22        NA                                         Black
-23        NA               Asian American/Pacific Islander
-24        NA                                         White
-25        NA                                         Black
-26        NA                                         White
-27        NA                                        Latina
-28        NA                                         White
-29        NA                                         Black
-30        NA Native American/Alaska Native/Native Hawaiian
-31        NA                                        Latina
-32        NA                                         White
-33        NA                                         White
-34        NA                                         White
-35        NA                                         White
-36        NA                                        Latina
-37        NA                                         White
-38        NA               Asian American/Pacific Islander
-39        NA                                         White
-40        NA                                        Latina
-41        NA                                         White
-42        NA                                         White
-43        NA                                         White
-44        NA                                         Black
-45        NA                                         White
-46        NA                                         White
-47        NA                                        Latina
-48        NA                                         White
-49        NA                                        Latina
-50        NA                                         White
-51        NA                                         White
-52        NA                                         White
-53        NA                                         White
-54        NA                                         White
-55        NA                                         Black
-56        NA                                         White
-57        NA               Asian American/Pacific Islander
-58        NA                                         White
-59        NA                                         White
-60        NA                                         White
-61        NA                                         White
-62        NA                                         White
-63        NA               Asian American/Pacific Islander
-64        NA                                         Black
-65        NA                                         White
-66        NA                                         Black
-67        NA                                         White
-68        NA               Asian American/Pacific Islander
-69        NA                                         White
-70        NA                                         White
-71        NA                                         Black
-72        NA                                         White
-73        NA                                         Black
-74        NA                                         Black
-75        NA                                         White
-76        NA                                        Latina
-77        NA                                         White
-78        NA                                         White
-79        NA                                         White
-80        NA                                         White
-81        NA                                 White, Latina
-82        NA                                         White
-83        NA                                 White, Latina
-84        NA                                         White
-85        NA               Asian American/Pacific Islander
-86        NA                                         Black
-87        NA                                         White
-88        NA                                         Black
-89        NA                                         White
-90        NA                                         White
-91        NA               Asian American/Pacific Islander
-92        NA                                         White
-93        NA                                         White
-94        NA                                         White
-95        NA                                         Black
-96        NA                                         White
-97        NA                                         White
-98        NA                                        Latina
-99        NA                                        Latina
-100       NA                                         Black
-101       NA                                         White
-102       NA                                         White
-103       NA Native American/Alaska Native/Native Hawaiian
-104       NA                                         White
-105       NA                                         White
-106       NA                                         White
-107       NA                                         Black
-108       NA                                        Latina
-109       NA                                         White
-110       NA                                         White
-111       NA                                        Latina
-112       NA                                        Latina
-113       NA                                        Latina
-114       NA                                         White
-115       NA                                         White
-116       NA                                         White
-117       NA                                         White
-118       NA                                         Black
-119       NA                                         White
-120       NA                                         White
-121       NA                                         White
-122       NA                                         White
-123       NA                                         White
-124       NA                                         White
-125       NA                                         White
-126       NA                                         White
-127       NA                                         White
-128       NA               Asian American/Pacific Islander
-129       NA                                         White
-130       NA                                         White
-131       NA        Black, Asian American/Pacific Islander
-132       NA                                         Black
-133       NA                                         White
-134       NA                                         White
-135       NA                  Middle Eastern/North African
-136       NA               Asian American/Pacific Islander
-137       NA                                        Latina
-138       NA                                         White
-139       NA                                         Black
-140       NA                                         White
-141       NA                                        Latina
-142       NA                                         White
-143       NA                                         White
-144       NA                                         White
-145       NA                                         Black
-146       NA                                         Black
-147       NA                                         White
-148       NA                                         White
-149       NA                                         Black
-150       NA                                         Black</code></pre>
+1         12                                         Black
+2          3                                         White
+3          3                                         Black
+4          5                                         White
+5         AL                                         Black
+6          3                                         White
+7          1                                         White
+8          7                                         White
+9         11                                         Black
+10        26                                         White
+11         1                                         Black
+12        17                                         White
+13         3                                         White
+14        14                                         White
+15        AL                                         White
+16        20                                         Black
+17        28               Asian American/Pacific Islander
+18         5                                         White
+19         9                                         Black
+20        22                                         White
+21         2                                         White
+22         3 Native American/Alaska Native/Native Hawaiian
+23         4                                         White
+24         1                                         White
+25         3                                         White
+26         1                                         White
+27        10                                         Black
+28        44                                        Latina
+29         6                                         White
+30        16                                        Latina
+31        16                                         White
+32         7                                         White
+33        34                                        Latina
+34         5                                         White
+35        22                                         White
+36        29                                        Latina
+37        12                                         White
+38        14                                         White
+39         1                                         White
+40         4                                         White
+41         5                                         Black
+42         2                                         White
+43         3                                        Latina
+44         2                                         White
+45         6                                         White
+46        51                                         White
+47         7               Asian American/Pacific Islander
+48        30                                         Black
+49         9                                         White
+50         2                                         Black
+51        40               Asian American/Pacific Islander
+52         2                                         White
+53         2                                         White
+54        14                                         Black
+55        12                                         Black
+56        18                                         Black
+57         3                                         White
+58         3                                        Latina
+59         8                                         White
+60         5                                         White
+61        18                                         White
+62         2                                         White
+63         1                                         White
+64        11                                 White, Latina
+65        12                                         White
+66         6                                         White
+67         7               Asian American/Pacific Islander
+68         7                                         Black
+69         9                                         White
+70         4                                         White
+71         5                                         White
+72         6               Asian American/Pacific Islander
+73         1                                         White
+74        15                                         White
+75         1                                         White
+76         4                                         Black
+77         7               Asian American/Pacific Islander
+78        31                                        Latina
+79         3                                         White
+80        14                                        Latina
+81         5                                         Black
+82         7                                         White
+83        11                                         White
+84         1 Native American/Alaska Native/Native Hawaiian
+85         1                                         White
+86        47                                         White
+87         7                                         Black
+88         4                                         White
+89         2                                         White
+90        40                                        Latina
+91        27                                        Latina
+92        38                                        Latina
+93         5                                         White
+94         9                                         White
+95         8                                         White
+96         7                                         Black
+97        11                                         White
+98         7                                         White
+99         7                                         White
+100        5                                         White
+101       14                                         White
+102        1                                         White
+103       45               Asian American/Pacific Islander
+104       21                                         White
+105       11                                         White
+106       10        Black, Asian American/Pacific Islander
+107       24                                         White
+108        1                                         White
+109       12                  Middle Eastern/North African
+110       35                                        Latina
+111        3                                         White
+112       14                                         Black
+113       24                                         White
+114        7                                        Latina
+115        2                                         White
+116       25                                         White
+117       43                                         Black
+118       12                                         Black
+119       10                                         White
+120        7                                         White
+121        5                                         Black
+122       24                                         Black</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>stateofficials</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>state</span>, <span class='va'>party</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>party</span>, y <span class='op'>=</span> <span class='va'>state</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>dems</span> <span class='op'>&lt;-</span> <span class='va'>stateofficials</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>party</span> <span class='op'>==</span> <span class='st'>'Democrat'</span><span class='op'>)</span> </span>
+<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>dems</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>race_ethnicity</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>axis.text.x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>angle <span class='op'>=</span> <span class='fl'>90</span>, vjust <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Female Democratic Representatives by Race"</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
+<img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>dems</span></span></code></pre>
 </div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<pre><code>        ID Year First.Name Middle.Name           Last.Name    party
+1  196595k 2022       Alma          S.               Adams Democrat
+2  627442k 2022      Cindy                            Axne Democrat
+3  197852k 2022      Joyce          B.              Beatty Democrat
+4  558891k 2022       Lisa                 Blunt Rochester Democrat
+5  249764k 2022    Suzanne          M.            Bonamici Democrat
+6  629889k 2022    Carolyn                       Bourdeaux Democrat
+7  772727k 2022    Shontel                           Brown Democrat
+8  248455k 2022      Julia                        Brownley Democrat
+9  571342k 2022       Cori                            Bush Democrat
+10 378493k 2022      Cheri          L.              Bustos Democrat
+11 248289k 2022      Kathy          A.              Castor Democrat
+12 665191k 2022     Sheila             Cherfilus-McCormick Democrat
+13 209456k 2022       Judy                             Chu Democrat
+14 263010k 2022  Katherine          M.               Clark Democrat
+15 248335k 2022     Yvette          D.              Clarke Democrat
+16 536254k 2022     Angela          D.               Craig Democrat
+17 655850k 2022    Sharice                          Davids Democrat
+18 569358k 2022  Madeleine                            Dean Democrat
+19 158770k 2022      Diana          L.             DeGette Democrat
+20 158778k 2022       Rosa          L.             DeLauro Democrat
+21 284676k 2022      Suzan          K.             DelBene Democrat
+22 378538k 2022        Val          B.             Demings Democrat
+23 536062k 2022    Nanette                   Diaz Barragan Democrat
+24 357079k 2022     Debbie                         Dingell Democrat
+25 634679k 2022   Veronica                         Escobar Democrat
+26 158731k 2022       Anna          G.               Eshoo Democrat
+27 193594k 2022       Lois          J.             Frankel Democrat
+28 454041k 2022     Sylvia          R.              Garcia Democrat
+29 666101k 2022     Jahana                           Hayes Democrat
+30 621721k 2022    Chrissy                        Houlahan Democrat
+31 644085k 2022       Sara                          Jacobs Democrat
+32 499054k 2022    Pramila                         Jayapal Democrat
+33 159100k 2022      Eddie     Bernice             Johnson Democrat
+34 159009k 2022      Marcy          C.              Kaptur Democrat
+35 212680k 2022      Robin          L.               Kelly Democrat
+36 227470k 2022        Ann          L.         Kirkpatrick Democrat
+37 284835k 2022        Ann      McLane              Kuster Democrat
+38 391655k 2022     Brenda          L.            Lawrence Democrat
+39 158726k 2022    Barbara          J.                 Lee Democrat
+40 159088k 2022     Sheila     Jackson                 Lee Democrat
+41 541030k 2022      Susie                             Lee Democrat
+42 453352k 2022     Teresa                 Leger Fernandez Democrat
+43 158733k 2022        Zoe                         Lofgren Democrat
+44 644669k 2022     Elaine          G.               Luria Democrat
+45 158983k 2022    Carolyn          B.             Maloney Democrat
+46 646745k 2022      Kathy                         Manning Democrat
+47 232639k 2022      Doris          O.              Matsui Democrat
+48 658185k 2022       Lucy                          McBath Democrat
+49 195933k 2022      Betty                        McCollum Democrat
+50 271828k 2022      Grace                            Meng Democrat
+51 199871k 2022       Gwen          S.               Moore Democrat
+52 588810k 2022  Stephanie                          Murphy Democrat
+53 158751k 2022      Grace          F.          Napolitano Democrat
+54 619144k 2022      Marie                          Newman Democrat
+55 624858k 2022 Alexandria                   Ocasio-Cortez Democrat
+56 583510k 2022      Ilhan                            Omar Democrat
+57 625330k 2022  Elizabeth                Pannill Fletcher Democrat
+58 158725k 2022      Nancy                          Pelosi Democrat
+59 803941k 2022       Mary                         Peltola Democrat
+60 267137k 2022    Chellie          M.             Pingree Democrat
+61 621002k 2022  Katherine                          Porter Democrat
+62 234321k 2022     Ayanna                        Pressley Democrat
+63 489426k 2022   Kathleen          M.                Rice Democrat
+64 211983k 2022    Deborah                            Ross Democrat
+65 158750k 2022    Lucille                   Roybal-Allard Democrat
+66 211684k 2022      Linda          T.             Sanchez Democrat
+67 655204k 2022       Mary         Gay             Scanlon Democrat
+68 158836k 2022        Jan          D.          Schakowsky Democrat
+69 632874k 2022        Kim                         Schrier Democrat
+70 283908k 2022      Terri          A.              Sewell Democrat
+71 625260k 2022      Mikie                        Sherrill Democrat
+72 261745k 2022     Elissa                         Slotkin Democrat
+73 630216k 2022    Abigail          D.          Spanberger Democrat
+74 192997k 2022     Jackie                          Speier Democrat
+75 461875k 2022    Melanie          A.           Stansbury Democrat
+76 623571k 2022      Haley                         Stevens Democrat
+77 727678k 2022    Marilyn                      Strickland Democrat
+78 197530k 2022       Dina          C.               Titus Democrat
+79 268236k 2022    Rashida                           Tlaib Democrat
+80 267783k 2022      Norma          J.              Torres Democrat
+81 636951k 2022       Lori                          Trahan Democrat
+82 601601k 2022     Lauren          A.           Underwood Democrat
+83 158981k 2022      Nydia          M.           Velazquez Democrat
+84 226499k 2022     Debbie               Wasserman Schultz Democrat
+85 158752k 2022     Maxine                          Waters Democrat
+86 362925k 2022     Bonnie                  Watson Coleman Democrat
+87 484877k 2022   Jennifer          T.              Wexton Democrat
+88 638609k 2022      Susan       Ellis                Wild Democrat
+89 648743k 2022     Nikema                        Williams Democrat
+90 211856k 2022  Frederica          S.              Wilson Democrat
+      Level            Position               state District
+1  Congress U.S. Representative North Carolina - NC       12
+2  Congress U.S. Representative           Iowa - IA        3
+3  Congress U.S. Representative           Ohio - OH        3
+4  Congress U.S. Representative       Delaware - DE       AL
+5  Congress U.S. Representative         Oregon - OR        1
+6  Congress U.S. Representative        Georgia - GA        7
+7  Congress U.S. Representative           Ohio - OH       11
+8  Congress U.S. Representative     California - CA       26
+9  Congress U.S. Representative       Missouri - MO        1
+10 Congress U.S. Representative       Illinois - IL       17
+11 Congress U.S. Representative        Florida - FL       14
+12 Congress U.S. Representative        Florida - FL       20
+13 Congress U.S. Representative     California - CA       28
+14 Congress U.S. Representative  Massachusetts - MA        5
+15 Congress U.S. Representative       New York - NY        9
+16 Congress U.S. Representative      Minnesota - MN        2
+17 Congress U.S. Representative         Kansas - KS        3
+18 Congress U.S. Representative   Pennsylvania - PA        4
+19 Congress U.S. Representative       Colorado - CO        1
+20 Congress U.S. Representative    Connecticut - CT        3
+21 Congress U.S. Representative     Washington - WA        1
+22 Congress U.S. Representative        Florida - FL       10
+23 Congress U.S. Representative     California - CA       44
+24 Congress U.S. Representative       Michigan - MI        6
+25 Congress U.S. Representative          Texas - TX       16
+26 Congress U.S. Representative     California - CA       16
+27 Congress U.S. Representative        Florida - FL       22
+28 Congress U.S. Representative          Texas - TX       29
+29 Congress U.S. Representative    Connecticut - CT        5
+30 Congress U.S. Representative   Pennsylvania - PA        6
+31 Congress U.S. Representative     California - CA       51
+32 Congress U.S. Representative     Washington - WA        7
+33 Congress U.S. Representative          Texas - TX       30
+34 Congress U.S. Representative           Ohio - OH        9
+35 Congress U.S. Representative       Illinois - IL        2
+36 Congress U.S. Representative        Arizona - AZ        2
+37 Congress U.S. Representative  New Hampshire - NH        2
+38 Congress U.S. Representative       Michigan - MI       14
+39 Congress U.S. Representative     California - CA       12
+40 Congress U.S. Representative          Texas - TX       18
+41 Congress U.S. Representative         Nevada - NV        3
+42 Congress U.S. Representative     New Mexico - NM        3
+43 Congress U.S. Representative     California - CA       18
+44 Congress U.S. Representative       Virginia - VA        2
+45 Congress U.S. Representative       New York - NY       12
+46 Congress U.S. Representative North Carolina - NC        6
+47 Congress U.S. Representative     California - CA        7
+48 Congress U.S. Representative        Georgia - GA        7
+49 Congress U.S. Representative      Minnesota - MN        4
+50 Congress U.S. Representative       New York - NY        6
+51 Congress U.S. Representative      Wisconsin - WI        4
+52 Congress U.S. Representative        Florida - FL        7
+53 Congress U.S. Representative     California - CA       31
+54 Congress U.S. Representative       Illinois - IL        3
+55 Congress U.S. Representative       New York - NY       14
+56 Congress U.S. Representative      Minnesota - MN        5
+57 Congress U.S. Representative          Texas - TX        7
+58 Congress U.S. Representative     California - CA       11
+59 Congress U.S. Representative         Alaska - AK        1
+60 Congress U.S. Representative          Maine - ME        1
+61 Congress U.S. Representative     California - CA       47
+62 Congress U.S. Representative  Massachusetts - MA        7
+63 Congress U.S. Representative       New York - NY        4
+64 Congress U.S. Representative North Carolina - NC        2
+65 Congress U.S. Representative     California - CA       40
+66 Congress U.S. Representative     California - CA       38
+67 Congress U.S. Representative   Pennsylvania - PA        5
+68 Congress U.S. Representative       Illinois - IL        9
+69 Congress U.S. Representative     Washington - WA        8
+70 Congress U.S. Representative        Alabama - AL        7
+71 Congress U.S. Representative     New Jersey - NJ       11
+72 Congress U.S. Representative       Michigan - MI        7
+73 Congress U.S. Representative       Virginia - VA        7
+74 Congress U.S. Representative     California - CA       14
+75 Congress U.S. Representative     New Mexico - NM        1
+76 Congress U.S. Representative       Michigan - MI       11
+77 Congress U.S. Representative     Washington - WA       10
+78 Congress U.S. Representative         Nevada - NV        1
+79 Congress U.S. Representative       Michigan - MI       12
+80 Congress U.S. Representative     California - CA       35
+81 Congress U.S. Representative  Massachusetts - MA        3
+82 Congress U.S. Representative       Illinois - IL       14
+83 Congress U.S. Representative       New York - NY        7
+84 Congress U.S. Representative        Florida - FL       25
+85 Congress U.S. Representative     California - CA       43
+86 Congress U.S. Representative     New Jersey - NJ       12
+87 Congress U.S. Representative       Virginia - VA       10
+88 Congress U.S. Representative   Pennsylvania - PA        7
+89 Congress U.S. Representative        Georgia - GA        5
+90 Congress U.S. Representative        Florida - FL       24
+                                  race_ethnicity
+1                                          Black
+2                                          White
+3                                          Black
+4                                          Black
+5                                          White
+6                                          White
+7                                          Black
+8                                          White
+9                                          Black
+10                                         White
+11                                         White
+12                                         Black
+13               Asian American/Pacific Islander
+14                                         White
+15                                         Black
+16                                         White
+17 Native American/Alaska Native/Native Hawaiian
+18                                         White
+19                                         White
+20                                         White
+21                                         White
+22                                         Black
+23                                        Latina
+24                                         White
+25                                        Latina
+26                                         White
+27                                         White
+28                                        Latina
+29                                         Black
+30                                         White
+31                                         White
+32               Asian American/Pacific Islander
+33                                         Black
+34                                         White
+35                                         Black
+36                                         White
+37                                         White
+38                                         Black
+39                                         Black
+40                                         Black
+41                                         White
+42                                        Latina
+43                                         White
+44                                         White
+45                                         White
+46                                         White
+47               Asian American/Pacific Islander
+48                                         Black
+49                                         White
+50               Asian American/Pacific Islander
+51                                         Black
+52               Asian American/Pacific Islander
+53                                        Latina
+54                                         White
+55                                        Latina
+56                                         Black
+57                                         White
+58                                         White
+59 Native American/Alaska Native/Native Hawaiian
+60                                         White
+61                                         White
+62                                         Black
+63                                         White
+64                                         White
+65                                        Latina
+66                                        Latina
+67                                         White
+68                                         White
+69                                         White
+70                                         Black
+71                                         White
+72                                         White
+73                                         White
+74                                         White
+75                                         White
+76                                         White
+77        Black, Asian American/Pacific Islander
+78                                         White
+79                  Middle Eastern/North African
+80                                        Latina
+81                                         White
+82                                         Black
+83                                        Latina
+84                                         White
+85                                         Black
+86                                         Black
+87                                         White
+88                                         White
+89                                         Black
+90                                         Black</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>reps</span> <span class='op'>&lt;-</span> <span class='va'>stateofficials</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>party</span> <span class='op'>==</span> <span class='st'>'Republican'</span><span class='op'>)</span> </span>
+<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>reps</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>race_ethnicity</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>axis.text.x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>angle <span class='op'>=</span> <span class='fl'>90</span>, vjust <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Female Republican Representatives by Race"</span><span class='op'>)</span></span></code></pre>
+</div>
+<img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>reps</span></span></code></pre>
+</div>
+<pre><code>        ID Year  First.Name Middle.Name        Last.Name      party
+1  495403k 2022   Stephanie                         Bice Republican
+2  724132k 2022      Lauren                      Boebert Republican
+3  447426k 2022         Kat                      Cammack Republican
+4  464230k 2022         Liz          L.           Cheney Republican
+5  267742k 2022      Connie                       Conway Republican
+6  195769k 2022    Michelle          L.        Fischbach Republican
+7  771355k 2022       Mayra                       Flores Republican
+8  196515k 2022    Virginia          A.             Foxx Republican
+9  159082k 2022         Kay          N.          Granger Republican
+10 707878k 2022    Marjorie                       Greene Republican
+11 734559k 2022       Diana                  Harshbarger Republican
+12 284768k 2022       Vicky          Jo         Hartzler Republican
+13 299694k 2022      Yvette          S.          Herrell Republican
+14 229353k 2022       Jaime          L.  Herrera Beutler Republican
+15 572935k 2022      Ashley                       Hinson Republican
+16 494206k 2022       Young          O.              Kim Republican
+17 267627k 2022      Debbie                        Lesko Republican
+18 768497k 2022       Julia                       Letlow Republican
+19 466143k 2022       Nancy                         Mace Republican
+20 309650k 2022      Nicole                  Malliotakis Republican
+21 721727k 2022        Lisa                      McClain Republican
+22 199779k 2022       Cathy             McMorris Rodgers Republican
+23 249553k 2022       Carol          D.           Miller Republican
+24 721413k 2022        Mary                       Miller Republican
+25 267080k 2022 Mariannette                 Miller-Meeks Republican
+26 658161k 2022       Maria                      Salazar Republican
+27 638877k 2022    Victoria                       Spartz Republican
+28 694474k 2022    Michelle                        Steel Republican
+29 247560k 2022       Elise          M.         Stefanik Republican
+30 216162k 2022     Claudia                       Tenney Republican
+31 661605k 2022        Beth                    Van Duyne Republican
+32 378827k 2022         Ann          L.           Wagner Republican
+      Level            Position               state District
+1  Congress U.S. Representative       Oklahoma - OK        5
+2  Congress U.S. Representative       Colorado - CO        3
+3  Congress U.S. Representative        Florida - FL        3
+4  Congress U.S. Representative        Wyoming - WY       AL
+5  Congress U.S. Representative     California - CA       22
+6  Congress U.S. Representative      Minnesota - MN        7
+7  Congress U.S. Representative          Texas - TX       34
+8  Congress U.S. Representative North Carolina - NC        5
+9  Congress U.S. Representative          Texas - TX       12
+10 Congress U.S. Representative        Georgia - GA       14
+11 Congress U.S. Representative      Tennessee - TN        1
+12 Congress U.S. Representative       Missouri - MO        4
+13 Congress U.S. Representative     New Mexico - NM        2
+14 Congress U.S. Representative     Washington - WA        3
+15 Congress U.S. Representative           Iowa - IA        2
+16 Congress U.S. Representative     California - CA       40
+17 Congress U.S. Representative        Arizona - AZ        8
+18 Congress U.S. Representative      Louisiana - LA        5
+19 Congress U.S. Representative South Carolina - SC        1
+20 Congress U.S. Representative       New York - NY       11
+21 Congress U.S. Representative       Michigan - MI        9
+22 Congress U.S. Representative     Washington - WA        5
+23 Congress U.S. Representative  West Virginia - WV        1
+24 Congress U.S. Representative       Illinois - IL       15
+25 Congress U.S. Representative           Iowa - IA        1
+26 Congress U.S. Representative        Florida - FL       27
+27 Congress U.S. Representative        Indiana - IN        5
+28 Congress U.S. Representative     California - CA       45
+29 Congress U.S. Representative       New York - NY       21
+30 Congress U.S. Representative       New York - NY       24
+31 Congress U.S. Representative          Texas - TX       24
+32 Congress U.S. Representative       Missouri - MO        2
+                    race_ethnicity
+1                            White
+2                            White
+3                            White
+4                            White
+5                            White
+6                            White
+7                           Latina
+8                            White
+9                            White
+10                           White
+11                           White
+12                           White
+13                           White
+14                          Latina
+15                           White
+16 Asian American/Pacific Islander
+17                           White
+18                           White
+19                           White
+20                   White, Latina
+21                           White
+22                           White
+23                           White
+24                           White
+25                           White
+26                          Latina
+27                           White
+28 Asian American/Pacific Islander
+29                           White
+30                           White
+31                           White
+32                           White</code></pre>
+</div>
+<h2 id="results">Results</h2>
+<p>I hypothesized that there would be greater numbers of POC female elected officials in Democratic parties relative to Republican. As seen from the tables above, there are around 6 POC races represented in Democratic POC female elected officials whereas Republican POC female elected officials only demonstrate about 2 POC races. Furthermore, relatively speaking, POC female elected Republican representatives do not reach even half that of the white representatives numbers wise. In contrast, the numer of non-white Democratic representatives is just a little less than the amount of white elected officials. Overall, my findings seem to prove my hypothesis.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
