@@ -1,28 +1,39 @@
 ---
 title: "Gov 50 Final Project"
 author: "Sara Kumar"
-description: "My final project"
+description: "12-12-2023"
 output:
   distill::distill_article:
     self_contained: false
 ---
 
-## Project thoughts
-I am interested in exploring data related to US House Representatives and the average ages of their respective constituencies. I also would like to explore the differences between the ages of State House Representatives and Federal Representatives. I would like to explore what ages are less represented in this branch of government at each level.
+# Introduction
 
-## Milestone 2
-Does political affiliation influence the race of female elected officials in Congress (specifically the House of Representatives)? In this study, I plan to examine race trends in female elected representatives in Congress to see if greater numbers of POC female representatives relate to party affiliation. I hypothesize that Democrats will demonstrate greater POC female representation in their elected representatives. As seen historically, California, a left-leaning state, has elected more African Americans to Congress than any other state. Furthermore, Congress has been getting progressively more diverse in recent years. The explanatory variable of interest is the amount of Democratic POC female representatives and the amount of Republican POC female representatives. These two explanatory variables will then be compared in external analyses. This variable will be measured from the Center for American Women and Politics’ data set on elected House of Representative officials. If I observe greater numbers of POC female elected officials in Democratic parties relative to Republicans, this would provide support for my hypothesis. If, on the other hand, I observe less POC female representation in left-leaning states as compared to right, this would provide evidence against my hypothesis.
+  What is the relationship between political affiliation and the percentage of POC female elected officials in the House of Representatives? In this study, I plan to examine race trends in female elected representatives in the House of Representatives to see if there is a directly proportional relationship between political party and the number of POC female representatives. I hypothesize that the Democratic party will demonstrate a greater percentage of POC female representation in their elected representatives. For example, as seen historically, California, a left-leaning state, has elected more African Americans to Congress than any other state. Furthermore, Congress has been getting progressively more diverse in recent years.
+
+  Understanding this project and research question is significant because if the data determines there is a strong correlation between the political party and the percentage of white elected representatives, we as a voter population can understand the priorities and values of Democrats versus Republicans which can then inform our voting decisions in upcoming elections. For instance, if my hypothesis proves true and there is a clear discrepancy between POC representation in the Democratic versus the Republican party, this suggests that the right-wing of our nation does not value diverse voices in comparison to the left. As voters, we can then decide if this information is enough to change our opinions on which political party we choose to support.
+
+# Data Section
+
+  The explanatory variable of interest/ the independent variable of this study is the political party of each female representative. The outcome variable is race of each elected official/ the percentage of white elected officials. These variables are measured from the Center for American Women and Politics’ data set on elected House of Representative officials.
 
 ```{r}
 library(tidyverse)
+library(gov50data)
+library(dplyr)
 ```
-
 
 ```{r}
 stateofficials <- read.csv("officeholders_positions.csv")
 
-stateofficials
+stateofficials <- stateofficials |>
+  mutate(white = ifelse(grepl("White", race_ethnicity), 1, 0))
 ```
+
+### Racial Distribution of Democratic Party Female Representatives (1/2 of Dependent Variable)
+
+The following visual displays a bar plot of the racial distribution of all elected female Democratic representatives and counts the number of elected officials of each respective race.
+
 ```{r}
 dems <- stateofficials %>%
   filter(party == 'Democrat') 
@@ -30,9 +41,11 @@ ggplot(data=dems, aes(x=race_ethnicity)) +
 geom_bar() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) +
   labs(title = "Female Democratic Representatives by Race")
-
-dems
 ```
+
+### Racial Distribution of Republican Party Female Representatives (2/2 of Dependent Variable)
+
+The following figure displays a bar plot of the racial distribution of all elected female Republican representatives and counts the number of elected officials of each respective race.
 
 ```{r}
 reps <- stateofficials %>%
@@ -41,8 +54,69 @@ ggplot(data=reps, aes(x=race_ethnicity)) +
 geom_bar() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) +
   labs(title = "Female Republican Representatives by Race")
-
-reps
 ```
-## Results
-I hypothesized that there would be greater numbers of POC female elected officials in Democratic parties relative to Republican. As seen from the tables above, there are around 6 POC races represented in Democratic POC female elected officials whereas Republican POC female elected officials only demonstrate about 2 POC races. Furthermore, relatively speaking, POC female elected Republican representatives do not reach even half that of the white representatives numbers wise. In contrast, the numer of non-white Democratic representatives is just a little less than the amount of white elected officials. Overall, my findings seem to prove my hypothesis.
+
+  Starting with the most basic understanding of my data set, we see above in these first two bar plots that there is significantly more diversity in the Democratic party than the Republican, with the Democrats electing a range of seven ethnicities in their respective female representatives and Republicans only electing four. Furthermore, the POC representation demonstrated in the in the Democratic party as seen from the first bar graph is approximately 75% of the white bar. In contrast, the POC representation demonstrated in the Republican party in the second bar graph is 25% at best.
+
+  So far, the visualizations below of my outcome variable (percentage of white elected officials) suggest that the results of this study will validate my hypothesis. One limitation of this data is the fact that there are more female Democratic representatives, so there is more data to analyze, and inevitably, greater racial representation. However, since I will be individually comparing each party through the difference-in-means, this will not impact the credibility of my results. 
+
+  As I proceed into the next observations and analyses, if my difference-in-means from comparing my explanatory and outcome variables demonstrates that there is a strong correlation between greater numbers of POC female elected officials in the Democratic party relative to the Republican party, this would provide support for my hypothesis. If, on the other hand, the difference in means does not demonstrate a causal relationship between increased POC female representation the Democratic party versus the Republican, this would provide evidence against my hypothesis.
+
+# Results
+
+### Comparing Racial Distribution Between Parties (Combined Comparison of Dependent Variable)
+
+The following visual displays a grouped bar plot that counts the POC versus non POC representation for each party of all elected female representatives.
+
+```{r}
+library(ggplot2)
+
+binary_plot <- stateofficials |>
+  group_by(party, white) |>
+  summarize(Count = n()) |>
+  ggplot(aes(x = party, y= Count, fill = as.factor(white))) + 
+    geom_bar(position="dodge", stat = "identity")
+
+binary_plot <- binary_plot + guides(fill=guide_legend(title="White? Yes (1) or No (0)")) + ggtitle("White vs POC Female Representatives By Party")
+
+binary_plot
+
+```
+
+After our initial analysis of the first two figures, this third bar graph groups POC versus white representatives per party and offers a side-by-side comparison. The findings from the first two figures are echoed by this third figure as the POC versus white bars in the Democratic party are fairly comparable whereas in the Republican party there are tremendous discrepancies (~47 vs 43 and ~27 vs 5 respectively). This once more suggests that, once I calculate the difference in means, there will be a causal relationship between percentage of white female elected officials and party affiliation. Additionally, while the following observation does not tell us whether there is a statistically indicated strong relationship between POC representation and political party, the dramatic increase in female representation in the Democratic party versus the Republican is another indicator towards the left's values versus the right's and emphasizes why this project is important.
+
+### Determining if There is a Causual Relationship Between Political Party and Percentage of White Representatives
+
+```{r}
+set.seed(02138)
+library(infer)
+
+ate <- stateofficials |>
+  specify(white ~ party) |>
+  calculate(stat = "diff in means")
+
+ate
+
+ate_null_dist <- stateofficials |> 
+  specify(white ~ party) |> 
+  hypothesize(null = "independence") |> 
+  generate(reps = 1000, type = "permute") |>
+  calculate(stat = "diff in means")
+
+visualize(ate_null_dist) + shade_p_value(obs_stat = ate, direction = "both")
+
+ate_p <- get_p_value(ate_null_dist, obs_stat = ate, direction = "both")
+ate_p
+```
+
+I hypothesized that there would be a direct relationship between the percentage of white female elected officials in the House of Representatives and the political party. In this experiment, to statistically prove this hypothesis, the difference-in-means must suggest that we can reject the null hypothesis (that the independent variable does not effect the outcome, or in other words, that the percentage of white female elected officials is not influenced by party affiliation). The difference-in-means here represents the distribution of differences between the means of the independent and outcome variables obtained from 1000 repeated samples. Each of these bars corresponds to a different sample, and the height of these bars indicates the probability of observing each scenario. In contrast, the red line represents the difference-in-means based on a sample in the actual data set. If the red line sits among the center of the distribution, then the data suggests that the outcome variable is not statistically significant and the observed differences in the data set are likely due to chance. However, here we see the red line is on the extreme right tail of the distribution. With this in mind, the correlation above clearly shows that the outcome variable is statistically significant and we can reject the null hypothesis.
+
+This conclusion is further proven upon looking at the p-value. If we accept the standard alpha of 0.5, our p-value of 0.002 is significantly less than our alpha, once more suggesting that we can safely reject the null hypothesis that there is no relationship between the percentage of white female elected officials and party affiliation. Therefore, there is a statistically significant relationship between the two.
+
+# Conclusion
+
+  Overall, it appears there is statistically significant evidence for the hypothesis that there is strong correlation between the percentage of white female elected officials in the House of Representatives and political affiliation. Not only was our p-value significantly less than the experimentally set alpha (0.002 vs 0.5) which numerically proves correlation, but qualitatively, the overall racial distribution in the Democratic party clearly shows a more equal distribution between POC and non-POC offcials than in the Republican. 
+
+  A potential limitation to this study is the fact that there are more female Democratic officials than Republican so it is inevitable that there would be greater observed racial distribution. This factor has the ability to affect both the response and explanatory variable. However, considering this study looked at the relationship of POC versus non POC elected officials per party before directly comparing the two, this data quantity difference should not have skewed the results too drastically. 
+
+If there was more time and were more financial resources to conduct this study, I would personally analyze the overall POC vs non POC representation in all elected officials in the House of Representatives to avoid any data quantity discrepancies. Additionally, since this data set also lists District and State, it would be interesting to get more granular with my analysis and see if the political affiliation of the state impacts the number of female/ POC elected representatives.
