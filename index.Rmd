@@ -13,7 +13,7 @@ output: html_document
 
 # Data Section
 
-  The explanatory variable of interest/ the independent variable of this study is the political party of each female representative. The outcome variable is race of each elected official/ the percentage of white elected officials. These variables are measured from the Center for American Women and Politics’ data set on elected House of Representative officials.
+  This is a cross-sectional study since I am analyzing the current female officials in the House of Representatives. The explanatory variable of interest/ the independent variable of this study is the political party of each female representative. The outcome variable is race of each elected official/ the percentage of white elected officials. These variables are measured from the Center for American Women and Politics’ data set on elected House of Representative officials.
 
 ```{r}
 library(tidyverse)
