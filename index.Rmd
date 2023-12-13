@@ -107,7 +107,7 @@ ate_null_dist <- stateofficials |>
 visualize(ate_null_dist) + shade_p_value(obs_stat = ate, direction = "both")
 
 ate_p <- get_p_value(ate_null_dist, obs_stat = ate, direction = "both")
-ate_p
+print(ate_p)
 ```
 
 ##### Regression Model:
